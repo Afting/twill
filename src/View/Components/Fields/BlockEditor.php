@@ -62,6 +62,7 @@ class BlockEditor extends TwillFormComponent
                     'value' => $this->name,
                     'nested' => $this->renderForBlocks,
                 ],
+                'availabilityId' => uniqid($this->name . '-')
             ])
         );
     }
