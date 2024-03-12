@@ -56,6 +56,7 @@
                 }
             @endphp
             <a17-sticky-nav data-sticky-target="navbar" :items="{{ json_encode($additionalFieldsets) }}">
+                @if(!empty($titleFormKey))
                 <a17-title-editor name="{{ $titleFormKey }}" thumbnail="{{ $titleThumbnail ?? '' }}"
                                   :editable-title="{{ json_encode($editableTitle ?? true) }}"
                                   :control-languages-publication="{{ json_encode($controlLanguagesPublication) }}"
@@ -69,6 +70,7 @@
                         @partialView(($moduleName ?? null), 'create')
                     </template>
                 </a17-title-editor>
+                @endif
                 <div slot="actions">
                     <a17-langswitcher
                         :all-published="{{ json_encode(!$controlLanguagesPublication) }}"></a17-langswitcher>
