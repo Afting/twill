@@ -115,6 +115,6 @@ class Form extends Collection implements CanHaveSubfields
     public function registerDynamicRepeaters(): void
     {
         $this->registerDynamicRepeatersFor($this);
-        $this->registerDynamicRepeatersFor($this->fieldsets);
+        $this->fieldsets?->registerDynamicRepeaters();
     }
 }
