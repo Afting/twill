@@ -70,10 +70,10 @@ class TwillCapsules
     public function getCapsuleForModel(string|TwillModelContract $model): Capsule
     {
         if ($model instanceof TwillModelContract) {
-            $model = explode('\\', get_class($model));
-
-            $model = end($model);
+            $model = get_class($model);
         }
+
+        $model = class_basename($model);
 
         $capsule = $this->getRegisteredCapsules()->first(function (Capsule $capsule) use ($model) {
             return $capsule->getSingular() === $model;

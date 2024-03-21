@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
@@ -201,12 +202,7 @@ trait HandleBrowsers
                     return [
                             'id' => $relatedElement->id,
                             'name' => $relatedElement->titleInBrowser ?? $relatedElement->$titleKey,
-                            'edit' => $relatedElement->adminEditUrl ?? moduleRoute(
-                                $moduleName ?? $relation,
-                                $routePrefix ?? '',
-                                'edit',
-                                $relatedElement->id
-                            ),
+                            'edit' => $this->getAdminEditUrl($relatedElement),
                             'endpointType' => $relatedElement->getMorphClass(),
                         ] + (classHasTrait($relatedElement, HasMedias::class) ? [
                             'thumbnail' => $relatedElement->defaultCmsImage(['w' => 100, 'h' => 100, 'fit' => 'crop']),
@@ -249,14 +245,10 @@ trait HandleBrowsers
             return $object->adminEditUrl;
         }
 
-        $relatedType = $object->getRelation('pivot')->related_type;
-        $relation = str_contains($relatedType, '\\')
-            ? getModuleNameByModel($relatedType)
-            : $relatedType;
-
+        $module = getModuleNameByModel($object);
         return moduleRoute(
-            $relation,
-            config('twill.block_editor.browser_route_prefixes.' . $relation),
+            $module,
+            config('twill.block_editor.browser_route_prefixes.' . $module),
             'edit',
             $object->id
         );
