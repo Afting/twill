@@ -77,4 +77,9 @@ class Fieldset implements CanHaveSubfields
 
         return $this;
     }
+
+    public function registerDynamicRepeaters(): void
+    {
+        $this->registerDynamicRepeatersFor($this->fields);
+    }
 }
