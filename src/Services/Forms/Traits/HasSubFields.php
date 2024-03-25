@@ -3,12 +3,13 @@
 namespace A17\Twill\Services\Forms\Traits;
 
 use A17\Twill\Services\Forms\Contracts\CanHaveSubfields;
+use Illuminate\Support\Collection;
 
 trait HasSubFields
 {
     public function registerDynamicRepeaters(): void
     {
-        if (is_iterable($this)) {
+        if ($this instanceof Collection) {
             $this->registerDynamicRepeatersFor($this);
         }
     }
