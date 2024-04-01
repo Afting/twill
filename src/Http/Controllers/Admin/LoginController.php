@@ -2,6 +2,7 @@
 
 namespace A17\Twill\Http\Controllers\Admin;
 
+use A17\Twill\Facades\RouteHelpers;
 use A17\Twill\Http\Requests\Admin\OauthRequest;
 use A17\Twill\Models\User;
 use A17\Twill\Repositories\UserRepository;
@@ -81,7 +82,7 @@ class LoginController extends Controller
         $this->config = $config;
 
         $this->middleware('twill_guest', ['except' => 'logout']);
-        $this->redirectTo = $config->get('twill.auth_login_redirect_path', '/');
+        $this->redirectTo = RouteHelpers::getAuthRedirectPath();
     }
 
     /**
